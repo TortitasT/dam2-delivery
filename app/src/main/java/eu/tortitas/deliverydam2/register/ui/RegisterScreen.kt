@@ -1,4 +1,4 @@
-package eu.tortitas.deliverydam2.login.ui
+package eu.tortitas.deliverydam2.register.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,12 +30,13 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun LoginScreen(
-    onNavigateToRegister: () -> Unit,
+fun RegisterScreen(
+    onNavigateToLogin: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var username by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
+    var passwordConfirmation by rememberSaveable { mutableStateOf("") }
 
     Box(modifier = modifier
         .padding(16.dp)
@@ -48,14 +49,14 @@ fun LoginScreen(
 
                 Column {
                     Text(
-                        text = "Hello there!",
+                        text = "Get Started",
                         modifier = modifier,
                         style = TextStyle(
                             fontSize = 32.sp
                         )
                     )
                     Text(
-                        text = "Welcome back",
+                        text = "Start by creating an account",
                         modifier = modifier,
                         style = TextStyle(
                             fontSize = 20.sp,
@@ -74,8 +75,13 @@ fun LoginScreen(
                     modifier = modifier.fillMaxWidth(),
                     value = password, onValueChange = { password = it })
 
-                TextButton(onClick = onNavigateToRegister){
-                    Text(text = "Don’t have an account? Register now!")
+                TextField(
+                    label = { Text(text = "Password confirmation") },
+                    modifier = modifier.fillMaxWidth(),
+                    value = passwordConfirmation, onValueChange = { passwordConfirmation = it })
+
+                TextButton(onClick = onNavigateToLogin){
+                    Text(text = "Already have an account? Login!")
                 }
             }
         }

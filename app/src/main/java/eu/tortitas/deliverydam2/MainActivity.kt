@@ -6,9 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import eu.tortitas.deliverydam2.login.ui.LoginScreen
+import eu.tortitas.deliverydam2.register.ui.RegisterScreen
 import eu.tortitas.deliverydam2.ui.theme.DeliveryDAM2Theme
 
 class MainActivity : ComponentActivity() {
@@ -20,9 +25,35 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LoginScreen()
+                    MyNavigation()
                 }
             }
         }
     }
 }
+
+@Composable
+fun MyNavigation(
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController(),
+    startDestination: String = "login"
+) {
+    NavHost(
+        modifier = modifier,
+        navController = navController,
+        startDestination = startDestination
+    ) {
+        composable("login") {
+            LoginScreen(onNavigateToRegister = {
+                navController.navigate("register")
+            })
+        }
+
+        composable("register") {
+            RegisterScreen(onNavigateToLogin = {
+                navController.navigate("login")
+            })
+        }
+    }
+}
+
