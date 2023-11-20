@@ -1,5 +1,6 @@
 package eu.tortitas.deliverydam2
 
+import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,10 +13,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 import eu.tortitas.deliverydam2.login.ui.LoginScreen
 import eu.tortitas.deliverydam2.register.ui.RegisterScreen
 import eu.tortitas.deliverydam2.ui.theme.DeliveryDAM2Theme
 
+@HiltAndroidApp
+class DeliveryApplication : Application()
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +32,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyNavigation()
+                    NavigationHost()
                 }
             }
         }
@@ -33,7 +40,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MyNavigation(
+fun NavigationHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     startDestination: String = "login"
