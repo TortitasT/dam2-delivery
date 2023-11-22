@@ -10,7 +10,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -20,6 +19,7 @@ import eu.tortitas.deliverydam2.login.ui.LoginScreen
 import eu.tortitas.deliverydam2.login.ui.LoginViewModel
 import eu.tortitas.deliverydam2.register.ui.RegisterScreen
 import eu.tortitas.deliverydam2.ui.theme.DeliveryDAM2Theme
+import javax.inject.Inject
 
 @HiltAndroidApp
 class DeliveryApplication : Application()
@@ -27,6 +27,7 @@ class DeliveryApplication : Application()
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val loginViewModel: LoginViewModel by viewModels()
+    @Inject lateinit var navigator: Navigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +37,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavigationHost(loginViewModel)
+                    NavigationHost(loginViewModel, navigator)
                 }
             }
         }
@@ -44,13 +45,15 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun NavigationHost(
+fun NavigationHost (
     loginViewModel: LoginViewModel,
+    navigator: Navigator,
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController(),
     startDestination: String = "login",
-) {
-    Navigator.setNavHostController(navController)
+)
+{
+    val navController = rememberNavController()
+    navigator.setController(navController)
 
     NavHost(
         modifier = modifier,

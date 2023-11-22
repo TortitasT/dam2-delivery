@@ -7,18 +7,27 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
+
 @Module
 @InstallIn(SingletonComponent::class)
 object Navigator {
-    @SuppressLint("StaticFieldLeak") // hmm
-    private lateinit var navHostController: NavHostController
+    @SuppressLint("StaticFieldLeak")
+    private var navController: NavHostController? = null
 
-    fun setNavHostController(navHostController: NavHostController) {
-        this.navHostController = navHostController
+    fun setController(controller: NavHostController) {
+        navController = controller
+    }
+
+    fun clear() {
+        navController = null
+    }
+
+    fun navigate(route: String) {
+        navController?.navigate(route)
     }
 
     @Provides
-    fun provideNavHostController(): NavHostController {
-        return navHostController
+    fun provideNavigator(): Navigator {
+        return this
     }
 }
