@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun RegisterScreen(
-    onNavigateToLogin: () -> Unit,
+    registerViewModel: RegisterViewModel,
     modifier: Modifier = Modifier
 ) {
     var username by rememberSaveable { mutableStateOf("") }
@@ -80,7 +80,7 @@ fun RegisterScreen(
                     modifier = modifier.fillMaxWidth(),
                     value = passwordConfirmation, onValueChange = { passwordConfirmation = it })
 
-                TextButton(onClick = onNavigateToLogin){
+                TextButton(onClick = { registerViewModel.onNavigateToLogin() }){
                     Text(text = "Already have an account? Login!")
                 }
             }

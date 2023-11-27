@@ -27,12 +27,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun LoginScreen(
-    onNavigateToRegister: () -> Unit,
-    modifier: Modifier = Modifier
+    loginViewModel: LoginViewModel,
+    modifier: Modifier = Modifier,
 ) {
     var username by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
@@ -74,7 +75,7 @@ fun LoginScreen(
                     modifier = modifier.fillMaxWidth(),
                     value = password, onValueChange = { password = it })
 
-                TextButton(onClick = onNavigateToRegister){
+                TextButton(onClick = { loginViewModel.onNavigateToRegister() }){
                     Text(text = "Don’t have an account? Register now!")
                 }
             }
