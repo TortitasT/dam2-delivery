@@ -18,6 +18,7 @@ import dagger.hilt.android.HiltAndroidApp
 import eu.tortitas.deliverydam2.login.ui.LoginScreen
 import eu.tortitas.deliverydam2.login.ui.LoginViewModel
 import eu.tortitas.deliverydam2.register.ui.RegisterScreen
+import eu.tortitas.deliverydam2.register.ui.RegisterViewModel
 import eu.tortitas.deliverydam2.ui.theme.DeliveryDAM2Theme
 import javax.inject.Inject
 
@@ -27,6 +28,7 @@ class DeliveryApplication : Application()
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val loginViewModel: LoginViewModel by viewModels()
+    private val registerViewModel: RegisterViewModel by viewModels()
     @Inject lateinit var navigator: Navigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavigationHost(loginViewModel, navigator)
+                    NavigationHost(loginViewModel, registerViewModel, navigator)
                 }
             }
         }
@@ -47,6 +49,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun NavigationHost (
     loginViewModel: LoginViewModel,
+    registerViewModel: RegisterViewModel,
     navigator: Navigator,
     modifier: Modifier = Modifier,
     startDestination: String = "login",
@@ -65,9 +68,7 @@ fun NavigationHost (
         }
 
         composable("register") {
-            RegisterScreen(onNavigateToLogin = {
-                navController.navigate("login")
-            })
+            RegisterScreen(registerViewModel)
         }
     }
 }
