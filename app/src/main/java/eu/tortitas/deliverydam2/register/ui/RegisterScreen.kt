@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Done
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,6 +24,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -35,6 +38,7 @@ fun RegisterScreen(
     val email: String by registerViewModel.email.collectAsState()
     val password: String by registerViewModel.password.collectAsState()
     val passwordConfirmation: String by registerViewModel.passwordConfirmation.collectAsState()
+    val loading: Boolean by registerViewModel.loading.collectAsState()
 
     Box(
         modifier = modifier
@@ -69,6 +73,7 @@ fun RegisterScreen(
                     label = { Text(text = "Email") },
                     modifier = modifier.fillMaxWidth(),
                     value = email,
+                    enabled = !loading,
                     onValueChange = {
                         registerViewModel.onEmailOrPasswordChanged(
                             it,
@@ -80,7 +85,10 @@ fun RegisterScreen(
                 TextField(
                     label = { Text(text = "Password") },
                     modifier = modifier.fillMaxWidth(),
+                    visualTransformation = PasswordVisualTransformation(),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     value = password,
+                    enabled = !loading,
                     onValueChange = {
                         registerViewModel.onEmailOrPasswordChanged(
                             email,
@@ -92,7 +100,10 @@ fun RegisterScreen(
                 TextField(
                     label = { Text(text = "Password confirmation") },
                     modifier = modifier.fillMaxWidth(),
+                    visualTransformation = PasswordVisualTransformation(),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     value = passwordConfirmation,
+                    enabled = !loading,
                     onValueChange = {
                         registerViewModel.onEmailOrPasswordChanged(
                             email,
@@ -109,7 +120,13 @@ fun RegisterScreen(
 
         FloatingActionButton(
             modifier = modifier.align(Alignment.BottomEnd),
-            onClick = { registerViewModel.onRegister() }) {
+            onClick = {
+                if (loading) {
+                    return@FloatingActionButton
+                }
+
+                registerViewModel.onRegister()
+            }) {
             Icon(Icons.Outlined.Done, "Login")
         }
     }

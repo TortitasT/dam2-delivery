@@ -6,7 +6,7 @@ class LoginService @Inject constructor(
     private val loginClient: LoginClient
 ) {
     suspend fun login(email: String, password: String): Boolean {
-        val response = loginClient.doLogin(email, password)
+        val response = loginClient.login(email, password)
         if (response.isSuccessful) {
             return true
         }

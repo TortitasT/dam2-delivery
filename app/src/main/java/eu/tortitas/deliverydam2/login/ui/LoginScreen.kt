@@ -37,6 +37,7 @@ fun LoginScreen(
 ) {
     val email: String by loginViewModel.email.collectAsState()
     val password: String by loginViewModel.password.collectAsState()
+    val loading: Boolean by loginViewModel.loading.collectAsState()
 
     Box(
         modifier = modifier
@@ -71,6 +72,7 @@ fun LoginScreen(
                     label = { Text(text = "Email") },
                     modifier = modifier.fillMaxWidth(),
                     value = email,
+                    enabled = !loading,
                     onValueChange = { loginViewModel.onEmailOrPasswordChanged(it, password) })
 
                 TextField(
@@ -79,6 +81,7 @@ fun LoginScreen(
                     visualTransformation = PasswordVisualTransformation(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     value = password,
+                    enabled = !loading,
                     onValueChange = { loginViewModel.onEmailOrPasswordChanged(email, it) })
 
                 TextButton(onClick = { loginViewModel.onNavigateToRegister() }) {
@@ -89,7 +92,12 @@ fun LoginScreen(
 
         FloatingActionButton(
             modifier = modifier.align(Alignment.BottomEnd),
-            onClick = { loginViewModel.onLogin() }) {
+            onClick = {
+                if (loading) {
+                    return@FloatingActionButton
+                }
+                loginViewModel.onLogin()
+            }) {
             Icon(Icons.Outlined.Done, "Login")
         }
     }

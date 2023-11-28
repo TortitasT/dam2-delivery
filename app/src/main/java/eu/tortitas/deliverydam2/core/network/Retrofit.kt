@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import eu.tortitas.deliverydam2.login.data.network.LoginClient
+import eu.tortitas.deliverydam2.login.data.network.RegisterClient
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
@@ -21,4 +22,9 @@ class Retrofit {
     @Provides
     fun provideLoginClient(retrofit: retrofit2.Retrofit): LoginClient =
         retrofit.create(LoginClient::class.java)
+
+    @Singleton
+    @Provides
+    fun provideRegisterClient(retrofit: retrofit2.Retrofit): RegisterClient =
+        retrofit.create(RegisterClient::class.java)
 }
