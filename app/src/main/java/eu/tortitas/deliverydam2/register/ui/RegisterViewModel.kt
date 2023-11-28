@@ -30,6 +30,6 @@ class RegisterViewModel @Inject constructor(
     }
 
     fun onRegister() {
-        navigator.navigate("products")
+        //navigator.navigate("products")
     }
 }
