@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
+import eu.tortitas.deliverydam2.core.navigation.Navigator
 import eu.tortitas.deliverydam2.login.ui.LoginScreen
 import eu.tortitas.deliverydam2.login.ui.LoginViewModel
 import eu.tortitas.deliverydam2.register.ui.RegisterScreen
@@ -44,6 +45,11 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        navigator.navController = null
+    }
 }
 
 @Composable
@@ -56,7 +62,7 @@ fun NavigationHost (
 )
 {
     val navController = rememberNavController()
-    navigator.setController(navController)
+    navigator.navController = navController
 
     NavHost(
         modifier = modifier,

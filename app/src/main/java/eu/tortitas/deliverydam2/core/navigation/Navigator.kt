@@ -1,4 +1,4 @@
-package eu.tortitas.deliverydam2
+package eu.tortitas.deliverydam2.core.navigation
 
 import android.annotation.SuppressLint
 import androidx.navigation.NavHostController
@@ -11,16 +11,8 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 object Navigator {
-    @SuppressLint("StaticFieldLeak")
-    private var navController: NavHostController? = null
-
-    fun setController(controller: NavHostController) {
-        navController = controller
-    }
-
-    fun clear() {
-        navController = null
-    }
+    @SuppressLint("StaticFieldLeak") // hmm
+    var navController: NavHostController? = null
 
     fun navigate(route: String) {
         navController?.navigate(route)

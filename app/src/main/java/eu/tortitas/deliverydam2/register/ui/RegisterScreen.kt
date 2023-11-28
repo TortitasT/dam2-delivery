@@ -18,10 +18,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -34,13 +32,15 @@ fun RegisterScreen(
     registerViewModel: RegisterViewModel,
     modifier: Modifier = Modifier
 ) {
-    var username by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
-    var passwordConfirmation by rememberSaveable { mutableStateOf("") }
+    val email: String by registerViewModel.email.collectAsState()
+    val password: String by registerViewModel.password.collectAsState()
+    val passwordConfirmation: String by registerViewModel.passwordConfirmation.collectAsState()
 
-    Box(modifier = modifier
-        .padding(16.dp)
-        .fillMaxSize()) {
+    Box(
+        modifier = modifier
+            .padding(16.dp)
+            .fillMaxSize()
+    ) {
         Surface(modifier = modifier.padding(PaddingValues(16.dp, 64.dp))) {
             Column(
                 modifier = modifier,
@@ -68,19 +68,40 @@ fun RegisterScreen(
                 TextField(
                     label = { Text(text = "Email") },
                     modifier = modifier.fillMaxWidth(),
-                    value = username, onValueChange = { username = it })
+                    value = email,
+                    onValueChange = {
+                        registerViewModel.onEmailOrPasswordChanged(
+                            it,
+                            password,
+                            passwordConfirmation
+                        )
+                    })
 
                 TextField(
                     label = { Text(text = "Password") },
                     modifier = modifier.fillMaxWidth(),
-                    value = password, onValueChange = { password = it })
+                    value = password,
+                    onValueChange = {
+                        registerViewModel.onEmailOrPasswordChanged(
+                            email,
+                            it,
+                            passwordConfirmation
+                        )
+                    })
 
                 TextField(
                     label = { Text(text = "Password confirmation") },
                     modifier = modifier.fillMaxWidth(),
-                    value = passwordConfirmation, onValueChange = { passwordConfirmation = it })
+                    value = passwordConfirmation,
+                    onValueChange = {
+                        registerViewModel.onEmailOrPasswordChanged(
+                            email,
+                            password,
+                            it
+                        )
+                    })
 
-                TextButton(onClick = { registerViewModel.onNavigateToLogin() }){
+                TextButton(onClick = { registerViewModel.onNavigateToLogin() }) {
                     Text(text = "Already have an account? Login!")
                 }
             }
@@ -88,7 +109,7 @@ fun RegisterScreen(
 
         FloatingActionButton(
             modifier = modifier.align(Alignment.BottomEnd),
-            onClick = { /*TODO*/ }) {
+            onClick = { registerViewModel.onRegister() }) {
             Icon(Icons.Outlined.Done, "Login")
         }
     }
