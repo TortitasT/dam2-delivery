@@ -36,8 +36,19 @@ fun RegisterScreen(
     modifier: Modifier = Modifier
 ) {
     val email: String by registerViewModel.email.collectAsState()
+    val emailError: String = registerViewModel.emailError.collectAsState("").value ?: ""
+    val emailModified: Boolean = registerViewModel.emailModified.collectAsState().value
+
     val password: String by registerViewModel.password.collectAsState()
+    val passwordError: String = registerViewModel.passwordError.collectAsState("").value ?: ""
+    val passwordModified: Boolean = registerViewModel.passwordModified.collectAsState().value
+
     val passwordConfirmation: String by registerViewModel.passwordConfirmation.collectAsState()
+    val passwordConfirmationError: String =
+        registerViewModel.passwordConfirmationError.collectAsState("").value ?: ""
+    val passwordConfirmationModified: Boolean =
+        registerViewModel.passwordConfirmationModified.collectAsState().value
+
     val loading: Boolean by registerViewModel.loading.collectAsState()
 
     Box(
@@ -82,6 +93,14 @@ fun RegisterScreen(
                         )
                     })
 
+                if (emailError.isNotEmpty() && emailModified) {
+                    Text(
+                        text = emailError,
+                        modifier = modifier,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+
                 TextField(
                     label = { Text(text = "Password") },
                     modifier = modifier.fillMaxWidth(),
@@ -96,6 +115,14 @@ fun RegisterScreen(
                             passwordConfirmation
                         )
                     })
+
+                if (passwordError.isNotEmpty() && passwordModified) {
+                    Text(
+                        text = passwordError,
+                        modifier = modifier,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
 
                 TextField(
                     label = { Text(text = "Password confirmation") },
@@ -112,6 +139,14 @@ fun RegisterScreen(
                         )
                     })
 
+                if (passwordConfirmationError.isNotEmpty() && passwordConfirmationModified) {
+                    Text(
+                        text = passwordConfirmationError,
+                        modifier = modifier,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+
                 TextButton(onClick = { registerViewModel.onNavigateToLogin() }) {
                     Text(text = "Already have an account? Login!")
                 }
@@ -121,10 +156,6 @@ fun RegisterScreen(
         FloatingActionButton(
             modifier = modifier.align(Alignment.BottomEnd),
             onClick = {
-                if (loading) {
-                    return@FloatingActionButton
-                }
-
                 registerViewModel.onRegister()
             }) {
             Icon(Icons.Outlined.Done, "Login")

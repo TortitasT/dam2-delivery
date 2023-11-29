@@ -13,6 +13,18 @@ class RegisterUseCase @Inject constructor(
         password: String,
         passwordConfirmation: String
     ): Boolean {
+        if (email.isEmpty() || password.isEmpty() || passwordConfirmation.isEmpty()) {
+            return false
+        }
+
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            return false
+        }
+
+        if (password.length < 8) {
+            return false
+        }
+
         if (password != passwordConfirmation) {
             return false
         }
