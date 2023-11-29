@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.konan.properties.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -10,6 +12,13 @@ android {
     compileSdk = 33
 
     defaultConfig {
+        // Load Supabase API key from apikeys.properties
+        val keystoreFile = project.rootProject.file("apikeys.properties")
+        val properties = Properties()
+        properties.load(keystoreFile.inputStream())
+        val supabaseApiKey = properties.getProperty("SUPABASE_API_KEY") ?: ""
+        buildConfigField("String", "SUPABASE_API_KEY", "\"$supabaseApiKey\"")
+
         applicationId = "eu.tortitas.deliverydam2"
         minSdk = 24
         targetSdk = 33
@@ -40,6 +49,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
