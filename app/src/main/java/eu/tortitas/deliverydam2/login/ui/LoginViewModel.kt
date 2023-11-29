@@ -5,12 +5,10 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import eu.tortitas.deliverydam2.core.navigation.Navigator
 import eu.tortitas.deliverydam2.login.domain.LoginUseCase
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,7 +16,7 @@ class LoginViewModel @Inject constructor(
     private val navigator: Navigator,
     private val loginUseCase: LoginUseCase,
 ) : ViewModel() {
-    private val _email = MutableStateFlow("")
+    private val _email = MutableStateFlow("victorgf2011@gmail.com")
     val email = _email
 
     private val _emailModified = MutableStateFlow(false)
@@ -34,7 +32,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private val _password = MutableStateFlow("")
+    private val _password = MutableStateFlow("112122")
     val password = _password
 
     val _passwordModified = MutableStateFlow(false)
@@ -43,15 +41,25 @@ class LoginViewModel @Inject constructor(
     val passwordError = _password.map { password ->
         if (password.isEmpty()) {
             "Password is required"
-        } else if (password.length < 8) {
-            "Password must be at least 8 characters long"
+        } else if (password.length < 6) {
+            "Password must be at least 6 characters long"
         } else {
             null
         }
     }
 
+    private val _popupShown = MutableStateFlow(false)
+    val popupShown = _popupShown
+
+    private val _popupText = MutableStateFlow("")
+    val popupText = _popupText
+
     private val _loading = MutableStateFlow(false)
     val loading = _loading
+
+    fun onPopupDismissed() {
+        _popupShown.value = false
+    }
 
     fun onEmailOrPasswordChanged(email: String, password: String) {
         if (email != _email.value) {
@@ -86,13 +94,21 @@ class LoginViewModel @Inject constructor(
                 return@launch
             }
 
-            withContext(Dispatchers.IO) {
-                Thread.sleep(2000)
-            } // Simulate network delay
-
-            val logged = loginUseCase(email.value, password.value)
-            if (logged) {
+            val loginHadErrors = loginUseCase(email.value, password.value)
+            if (!loginHadErrors.hadErrors) {
                 navigator.navigate("restaurant")
+            } else {
+                when {
+                    loginHadErrors.errorsOnInput -> {
+                        _popupText.value = "Email or password are not valid"
+                    }
+
+                    loginHadErrors.errorsOnServer -> {
+                        _popupText.value = "Server error, please try again later"
+                    }
+                }
+
+                _popupShown.value = true
             }
 
             _loading.value = false

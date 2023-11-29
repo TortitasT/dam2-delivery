@@ -5,12 +5,10 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import eu.tortitas.deliverydam2.core.navigation.Navigator
 import eu.tortitas.deliverydam2.login.domain.RegisterUseCase
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -109,10 +107,6 @@ class RegisterViewModel @Inject constructor(
                 _loading.value = false
                 return@launch
             }
-
-            withContext(Dispatchers.IO) {
-                Thread.sleep(1000)
-            } // Simulate network delay
 
             if (registerUseCase(email.value, password.value, passwordConfirmation.value)) {
                 navigator.navigate("login")

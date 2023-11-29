@@ -3,11 +3,18 @@ package eu.tortitas.deliverydam2.login.data.network
 import com.google.gson.annotations.SerializedName
 
 data class LoginResponse(
-    @SerializedName("name") val name: String,
-    @SerializedName("surname") val surname: String,
-    @SerializedName("genre") val genre: String,
-    @SerializedName("birthdate") val birthdate: String,
-    @SerializedName("phone") val phoneNumber: String,
-    @SerializedName("email") val email: String,
-    @SerializedName("password") val password: String
+    @SerializedName("access_token")
+    val accessToken: String,
+
+    @SerializedName("token_type")
+    val tokenType: String,
+
+    @SerializedName("expires_in")
+    val expiresIn: Int,
+
+    @SerializedName("expires_at")
+    val expiresAt: Int,
+
+    @SerializedName("refresh_token")
+    val refreshToken: String,
 )

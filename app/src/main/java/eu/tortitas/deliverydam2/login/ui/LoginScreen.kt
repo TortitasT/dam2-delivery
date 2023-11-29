@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Done
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -44,6 +45,9 @@ fun LoginScreen(
     val passwordModified: Boolean = loginViewModel.passwordModified.collectAsState().value
 
     val loading: Boolean by loginViewModel.loading.collectAsState()
+
+    val popupShown: Boolean by loginViewModel.popupShown.collectAsState()
+    val popupText: String by loginViewModel.popupText.collectAsState()
 
     Box(
         modifier = modifier
@@ -118,6 +122,19 @@ fun LoginScreen(
                 loginViewModel.onLogin()
             }) {
             Icon(Icons.Outlined.Done, "Login")
+        }
+
+        if (popupShown) {
+            AlertDialog(
+                onDismissRequest = { loginViewModel.onPopupDismissed() },
+                confirmButton = { /*TODO*/ },
+                title = {
+                    Text(text = "Uh oh!")
+                },
+                text = {
+                    Text(text = popupText)
+                },
+            )
         }
     }
 }

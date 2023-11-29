@@ -69,7 +69,7 @@ fun NavigationHost(
     restaurantViewModel: RestaurantViewModel,
     navigator: Navigator,
     modifier: Modifier = Modifier,
-    startDestination: String = "restaurant",
+    startDestination: String = "login",
 ) {
     val navController = rememberNavController()
     navigator.navController = navController
