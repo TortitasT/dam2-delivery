@@ -36,7 +36,13 @@ fun LoginScreen(
     modifier: Modifier = Modifier,
 ) {
     val email: String by loginViewModel.email.collectAsState()
+    val emailError: String = loginViewModel.emailError.collectAsState("").value ?: ""
+    val emailModified: Boolean = loginViewModel.emailModified.collectAsState().value
+
     val password: String by loginViewModel.password.collectAsState()
+    val passwordError: String = loginViewModel.passwordError.collectAsState("").value ?: ""
+    val passwordModified: Boolean = loginViewModel.passwordModified.collectAsState().value
+
     val loading: Boolean by loginViewModel.loading.collectAsState()
 
     Box(
@@ -75,6 +81,14 @@ fun LoginScreen(
                     enabled = !loading,
                     onValueChange = { loginViewModel.onEmailOrPasswordChanged(it, password) })
 
+                if (emailError.isNotEmpty() && emailModified) {
+                    Text(
+                        text = emailError,
+                        modifier = modifier,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+
                 TextField(
                     label = { Text(text = "Password") },
                     modifier = modifier.fillMaxWidth(),
@@ -83,6 +97,14 @@ fun LoginScreen(
                     value = password,
                     enabled = !loading,
                     onValueChange = { loginViewModel.onEmailOrPasswordChanged(email, it) })
+
+                if (passwordError.isNotEmpty() && passwordModified) {
+                    Text(
+                        text = passwordError,
+                        modifier = modifier,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
 
                 TextButton(onClick = { loginViewModel.onNavigateToRegister() }) {
                     Text(text = "Don’t have an account? Register now!")
@@ -93,9 +115,6 @@ fun LoginScreen(
         FloatingActionButton(
             modifier = modifier.align(Alignment.BottomEnd),
             onClick = {
-                if (loading) {
-                    return@FloatingActionButton
-                }
                 loginViewModel.onLogin()
             }) {
             Icon(Icons.Outlined.Done, "Login")

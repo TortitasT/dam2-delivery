@@ -91,6 +91,10 @@ class RegisterViewModel @Inject constructor(
     }
 
     fun onRegister() {
+        _emailModified.value = true
+        _passwordModified.value = true
+        _passwordConfirmationModified.value = true
+
         if (_loading.value) {
             return
         }
@@ -102,6 +106,7 @@ class RegisterViewModel @Inject constructor(
                 passwordError.firstOrNull() != null ||
                 passwordConfirmationError.firstOrNull() != null
             ) {
+                _loading.value = false
                 return@launch
             }
 
@@ -112,8 +117,8 @@ class RegisterViewModel @Inject constructor(
             if (registerUseCase(email.value, password.value, passwordConfirmation.value)) {
                 navigator.navigate("login")
             }
-        }
 
-        _loading.value = false
+            _loading.value = false
+        }
     }
 }
