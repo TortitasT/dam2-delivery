@@ -92,7 +92,7 @@ class LoginViewModel @Inject constructor(
 
             val logged = loginUseCase(email.value, password.value)
             if (logged) {
-                navigator.navigate("dishes")
+                navigator.navigate("restaurant")
             }
 
             _loading.value = false
