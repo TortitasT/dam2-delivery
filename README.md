@@ -2,6 +2,8 @@
 
 Delivery app mockup made in Jetpack Compose for DAM2
 
+[Click to go to main folder 😊](app/src/main/java/eu/tortitas/deliverydam2)
+
 ## Development
 
 Create `apikeys.properties` file.
