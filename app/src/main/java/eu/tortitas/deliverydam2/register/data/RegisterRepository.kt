@@ -6,6 +6,6 @@ import javax.inject.Inject
 class RegisterRepository @Inject constructor(
     private val registerService: RegisterService
 ) {
-    suspend fun register(email: String, password: String, passwordConfirmation: String): Boolean =
-        registerService.login(email, password, passwordConfirmation)
+    suspend fun register(email: String, hashedPassword: ByteArray): Boolean =
+        registerService.register(email, hashedPassword)
 }

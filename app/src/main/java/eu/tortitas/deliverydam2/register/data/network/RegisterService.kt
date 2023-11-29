@@ -5,8 +5,8 @@ import javax.inject.Inject
 class RegisterService @Inject constructor(
     private val registerClient: RegisterClient
 ) {
-    suspend fun login(email: String, password: String, passwordConfirmation: String): Boolean {
-        val response = registerClient.register(email, password, passwordConfirmation)
+    suspend fun register(email: String, hashedPassword: ByteArray): Boolean {
+        val response = registerClient.register(email, hashedPassword)
         if (response.isSuccessful) {
             return true
         }
