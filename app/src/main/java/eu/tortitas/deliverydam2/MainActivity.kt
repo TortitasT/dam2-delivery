@@ -16,11 +16,12 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 import eu.tortitas.deliverydam2.core.navigation.Navigator
-import eu.tortitas.deliverydam2.dishes.ui.DishesScreen
 import eu.tortitas.deliverydam2.login.ui.LoginScreen
 import eu.tortitas.deliverydam2.login.ui.LoginViewModel
 import eu.tortitas.deliverydam2.register.ui.RegisterScreen
 import eu.tortitas.deliverydam2.register.ui.RegisterViewModel
+import eu.tortitas.deliverydam2.restaurant.ui.RestaurantScreen
+import eu.tortitas.deliverydam2.restaurant.ui.RestaurantViewModel
 import eu.tortitas.deliverydam2.ui.theme.DeliveryDAM2Theme
 import javax.inject.Inject
 
@@ -31,6 +32,7 @@ class DeliveryApplication : Application()
 class MainActivity : ComponentActivity() {
     private val loginViewModel: LoginViewModel by viewModels()
     private val registerViewModel: RegisterViewModel by viewModels()
+    private val restaurantViewModel: RestaurantViewModel by viewModels()
 
     @Inject
     lateinit var navigator: Navigator
@@ -43,7 +45,12 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavigationHost(loginViewModel, registerViewModel, navigator)
+                    NavigationHost(
+                        loginViewModel,
+                        registerViewModel,
+                        restaurantViewModel,
+                        navigator
+                    )
                 }
             }
         }
@@ -59,9 +66,10 @@ class MainActivity : ComponentActivity() {
 fun NavigationHost(
     loginViewModel: LoginViewModel,
     registerViewModel: RegisterViewModel,
+    restaurantViewModel: RestaurantViewModel,
     navigator: Navigator,
     modifier: Modifier = Modifier,
-    startDestination: String = "login",
+    startDestination: String = "restaurant",
 ) {
     val navController = rememberNavController()
     navigator.navController = navController
@@ -79,8 +87,8 @@ fun NavigationHost(
             RegisterScreen(registerViewModel, modifier)
         }
 
-        composable("dishes") {
-            DishesScreen(modifier)
+        composable("restaurant") {
+            RestaurantScreen(restaurantViewModel, modifier)
         }
     }
 }
