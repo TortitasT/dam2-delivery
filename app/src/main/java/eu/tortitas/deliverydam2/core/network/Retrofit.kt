@@ -7,6 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import eu.tortitas.deliverydam2.BuildConfig
 import eu.tortitas.deliverydam2.login.data.network.LoginClient
 import eu.tortitas.deliverydam2.login.data.network.RegisterClient
+import eu.tortitas.deliverydam2.restaurant.data.network.RestaurantClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -59,4 +60,10 @@ class Retrofit {
         networkClient: NetworkClient
     ): RegisterClient =
         networkClient.retrofit.create(RegisterClient::class.java)
+
+    @Provides
+    fun provideRestaurantClient(
+        networkClient: NetworkClient
+    ): RestaurantClient =
+        networkClient.retrofit.create(RestaurantClient::class.java)
 }

@@ -20,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -33,6 +34,12 @@ fun RestaurantScreen(
     restaurantViewModel: RestaurantViewModel,
     modifier: Modifier = Modifier,
 ) {
+    val restaurant = restaurantViewModel.restaurant.collectAsState().value
+
+    if (restaurant == null) {
+        restaurantViewModel.loadRestaurant(1)
+    }
+
     Header(onBack = { restaurantViewModel.onLogout() }) {
         IconButton(onClick = { }) {
             Icon(Icons.Outlined.FavoriteBorder, "Add to favorites")
@@ -57,14 +64,15 @@ fun RestaurantScreen(
                 )
                 {
                     Text(
-                        text = "The Hot Stone Pizzeria",
+                        text = restaurant?.name ?: "",
                         style = MaterialTheme.typography.titleLarge,
                         modifier = modifier
                             .widthIn(0.dp, 300.dp)
                     )
 
                     AsyncImage(
-                        model = "https://offloadmedia.feverup.com/madridsecreto.co/wp-content/uploads/2021/07/31053706/mejor-pizzeria-europa-fratelli-figurato-1024x683.jpg",
+                        //model = "https://offloadmedia.feverup.com/madridsecreto.co/wp-content/uploads/2021/07/31053706/mejor-pizzeria-europa-fratelli-figurato-1024x683.jpg",
+                        model = restaurant?.coverUrl ?: "",
                         contentDescription = "Restaurant image",
                         contentScale = ContentScale.Crop,
                         modifier = modifier
