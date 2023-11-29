@@ -1,6 +1,6 @@
 package eu.tortitas.deliverydam2.login.domain
 
-import eu.tortitas.deliverydam2.core.HashModule
+import eu.tortitas.deliverydam2.core.security.HashModule
 import eu.tortitas.deliverydam2.login.data.RegisterRepository
 import javax.inject.Inject
 

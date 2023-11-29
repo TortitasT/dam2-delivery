@@ -1,4 +1,4 @@
-package eu.tortitas.deliverydam2.core
+package eu.tortitas.deliverydam2.core.security
 
 import java.security.NoSuchAlgorithmException
 import java.security.SecureRandom
