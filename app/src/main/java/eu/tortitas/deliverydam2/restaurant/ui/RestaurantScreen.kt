@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
@@ -27,6 +29,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import eu.tortitas.deliverydam2.composables.Header
+import eu.tortitas.deliverydam2.restaurant.ui.composables.DishCard
 
 
 @Composable
@@ -50,6 +53,7 @@ fun RestaurantScreen(
         modifier = modifier
             .padding(8.dp)
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
     ) {
         Surface(modifier = modifier.padding(PaddingValues(16.dp, 64.dp))) {
             Column(
@@ -71,7 +75,6 @@ fun RestaurantScreen(
                     )
 
                     AsyncImage(
-                        //model = "https://offloadmedia.feverup.com/madridsecreto.co/wp-content/uploads/2021/07/31053706/mejor-pizzeria-europa-fratelli-figurato-1024x683.jpg",
                         model = restaurant?.coverUrl ?: "",
                         contentDescription = "Restaurant image",
                         contentScale = ContentScale.Crop,
@@ -82,6 +85,14 @@ fun RestaurantScreen(
                             .requiredWidth(64.dp)
                             .requiredHeight(64.dp)
                     )
+                }
+
+                // Mock scroll
+                val dishes =
+                    arrayOf(restaurant?.dishes, restaurant?.dishes).flatMap { it ?: emptyList() }
+
+                for (dish in dishes) {
+                    DishCard(dish, modifier, {})
                 }
             }
         }
