@@ -5,9 +5,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import eu.tortitas.deliverydam2.BuildConfig
+import eu.tortitas.deliverydam2.data.network.RestaurantClient
 import eu.tortitas.deliverydam2.login.data.network.LoginClient
 import eu.tortitas.deliverydam2.login.data.network.RegisterClient
-import eu.tortitas.deliverydam2.restaurant.data.network.RestaurantClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton

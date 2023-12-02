@@ -1,6 +1,5 @@
 package eu.tortitas.deliverydam2.restaurant.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +25,10 @@ class RestaurantViewModel @Inject constructor(
     fun loadRestaurant(id: Int) {
         viewModelScope.launch {
             _restaurant.value = getRestaurantsWithDishesUseCase(id)
-            Log.i("RestaurantViewModel", "Restaurant: ${_restaurant.value}")
         }
+    }
+
+    fun onClickedOnDish(dishId: Int) {
+        navigator.navigate("dish/$dishId")
     }
 }

@@ -1,4 +1,4 @@
-package eu.tortitas.deliverydam2.restaurant.data.network
+package eu.tortitas.deliverydam2.data.network
 
 import com.google.gson.annotations.SerializedName
 

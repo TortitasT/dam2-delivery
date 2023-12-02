@@ -13,7 +13,12 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
+import eu.tortitas.deliverydam2.R
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -62,9 +67,41 @@ fun DeliveryDAM2Theme(
         }
     }
 
+    val inikaFontFamily = FontFamily(
+        Font(R.font.inika_regular, FontWeight.Normal),
+        Font(R.font.inika_bold, FontWeight.Bold),
+    )
+
+    val typography = MaterialTheme.typography.copy(
+        titleLarge = MaterialTheme.typography.titleLarge.copy(
+            fontFamily = inikaFontFamily,
+            fontWeight = FontWeight.Normal,
+            fontSize = 32.sp
+        ),
+        titleMedium = MaterialTheme.typography.titleMedium.copy(
+            fontFamily = inikaFontFamily,
+            fontWeight = FontWeight.Normal,
+            fontSize = 20.sp,
+            color = colorScheme.secondary
+        ),
+        titleSmall = MaterialTheme.typography.titleSmall.copy(
+            fontFamily = inikaFontFamily,
+            fontWeight = FontWeight.Normal
+        ),
+        bodyLarge = MaterialTheme.typography.bodyLarge.copy(
+            fontWeight = FontWeight.Normal
+        ),
+        bodyMedium = MaterialTheme.typography.bodyMedium.copy(
+            fontWeight = FontWeight.Normal
+        ),
+        bodySmall = MaterialTheme.typography.bodySmall.copy(
+            fontWeight = FontWeight.Normal
+        ),
+    )
+
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = typography,
         content = content
     )
 }

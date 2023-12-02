@@ -24,11 +24,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -64,17 +62,12 @@ fun LoginScreen(
                     Text(
                         text = "Hello there!",
                         modifier = modifier,
-                        style = TextStyle(
-                            fontSize = 32.sp
-                        )
+                        style = MaterialTheme.typography.titleLarge
                     )
                     Text(
                         text = "Welcome back",
                         modifier = modifier,
-                        style = TextStyle(
-                            fontSize = 20.sp,
-                            color = MaterialTheme.colorScheme.secondary
-                        )
+                        style = MaterialTheme.typography.titleMedium
                     )
                 }
 

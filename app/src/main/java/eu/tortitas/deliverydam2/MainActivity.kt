@@ -20,6 +20,8 @@ import eu.tortitas.deliverydam2.login.ui.LoginScreen
 import eu.tortitas.deliverydam2.login.ui.LoginViewModel
 import eu.tortitas.deliverydam2.register.ui.RegisterScreen
 import eu.tortitas.deliverydam2.register.ui.RegisterViewModel
+import eu.tortitas.deliverydam2.restaurant.ui.DishScreen
+import eu.tortitas.deliverydam2.restaurant.ui.DishViewModel
 import eu.tortitas.deliverydam2.restaurant.ui.RestaurantScreen
 import eu.tortitas.deliverydam2.restaurant.ui.RestaurantViewModel
 import eu.tortitas.deliverydam2.ui.theme.DeliveryDAM2Theme
@@ -33,6 +35,7 @@ class MainActivity : ComponentActivity() {
     private val loginViewModel: LoginViewModel by viewModels()
     private val registerViewModel: RegisterViewModel by viewModels()
     private val restaurantViewModel: RestaurantViewModel by viewModels()
+    private val dishViewModel: DishViewModel by viewModels()
 
     @Inject
     lateinit var navigator: Navigator
@@ -49,6 +52,7 @@ class MainActivity : ComponentActivity() {
                         loginViewModel,
                         registerViewModel,
                         restaurantViewModel,
+                        dishViewModel,
                         navigator
                     )
                 }
@@ -67,6 +71,7 @@ fun NavigationHost(
     loginViewModel: LoginViewModel,
     registerViewModel: RegisterViewModel,
     restaurantViewModel: RestaurantViewModel,
+    dishViewModel: DishViewModel,
     navigator: Navigator,
     modifier: Modifier = Modifier,
     startDestination: String = "login",
@@ -87,8 +92,18 @@ fun NavigationHost(
             RegisterScreen(registerViewModel, modifier)
         }
 
-        composable("restaurant") {
+        composable("restaurant/{restaurantId}") {
+            val restaurantId = it.arguments?.getString("restaurantId") ?: return@composable
+
+            restaurantViewModel.loadRestaurant(Integer.parseInt(restaurantId))
             RestaurantScreen(restaurantViewModel, modifier)
+        }
+
+        composable("dish/{dishId}") {
+            val dishId = it.arguments?.getString("dishId") ?: return@composable
+
+            dishViewModel.loadDish(Integer.parseInt(dishId))
+            DishScreen(dishViewModel, modifier)
         }
     }
 }

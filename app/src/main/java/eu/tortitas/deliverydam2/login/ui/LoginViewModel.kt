@@ -96,7 +96,7 @@ class LoginViewModel @Inject constructor(
 
             val loginHadErrors = loginUseCase(email.value, password.value)
             if (!loginHadErrors.hadErrors) {
-                navigator.navigate("restaurant")
+                navigator.navigate("restaurant/1")
             } else {
                 when {
                     loginHadErrors.errorsOnInput -> {

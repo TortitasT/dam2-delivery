@@ -1,4 +1,4 @@
-package eu.tortitas.deliverydam2.restaurant.data.network
+package eu.tortitas.deliverydam2.data.network
 
 import javax.inject.Inject
 
@@ -33,5 +33,17 @@ class RestaurantService @Inject constructor(
     suspend fun getRestaurantWithDishes(id: Int): RestaurantResponse {
         val restaurantsWithDishes = getRestaurantsWithDishes(id)
         return restaurantsWithDishes.find { it.id == id }!!
+    }
+
+    suspend fun getDish(id: Int): DishResponse {
+        val dishesResponse = restaurantClient.dishes()
+
+        if (!dishesResponse.isSuccessful) {
+            throw Exception("Error getting dish: ${dishesResponse.code()}")
+        }
+
+        val dishes = dishesResponse.body()!!
+
+        return dishes.find { it.id == id }!!
     }
 }
