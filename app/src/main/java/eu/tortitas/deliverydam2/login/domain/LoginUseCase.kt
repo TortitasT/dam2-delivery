@@ -1,6 +1,5 @@
 package eu.tortitas.deliverydam2.login.domain
 
-import android.util.Log
 import eu.tortitas.deliverydam2.core.network.NetworkClient
 import eu.tortitas.deliverydam2.login.data.LoginRepository
 import javax.inject.Inject
@@ -11,14 +10,6 @@ class LoginUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(email: String, password: String): LoginHadErrors {
         val response = loginRepository.login(email, password)
-
-        // --- Logging ---
-        val responseErrorBody = response.errorBody()?.string()
-        Log.i(
-            "LoginUseCase",
-            "Response: $response ${response.body()} ${responseErrorBody ?: ""}"
-        )
-        // --- Logging END ---
 
         if (response.isSuccessful) {
             val token = response.body()?.accessToken

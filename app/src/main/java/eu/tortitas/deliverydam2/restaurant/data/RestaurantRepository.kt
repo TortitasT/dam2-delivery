@@ -1,8 +1,8 @@
-package eu.tortitas.deliverydam2.data
+package eu.tortitas.deliverydam2.restaurant.data
 
-import eu.tortitas.deliverydam2.data.network.DishResponse
-import eu.tortitas.deliverydam2.data.network.RestaurantResponse
-import eu.tortitas.deliverydam2.data.network.RestaurantService
+import eu.tortitas.deliverydam2.restaurant.data.network.DishResponse
+import eu.tortitas.deliverydam2.restaurant.data.network.RestaurantResponse
+import eu.tortitas.deliverydam2.restaurant.data.network.RestaurantService
 import javax.inject.Inject
 
 class RestaurantRepository @Inject constructor(

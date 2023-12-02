@@ -21,7 +21,7 @@ class RegisterUseCase @Inject constructor(
             return false
         }
 
-        if (password.length < 8) {
+        if (password.length < 6) {
             return false
         }
 
@@ -29,7 +29,6 @@ class RegisterUseCase @Inject constructor(
             return false
         }
 
-        val hashedPassword = hashModule.hash(password, hashModule.generateSalt())
-        return registerRepository.register(email, hashedPassword)
+        return registerRepository.register(email, password)
     }
 }

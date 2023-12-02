@@ -31,7 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import eu.tortitas.deliverydam2.domain.Dish
+import eu.tortitas.deliverydam2.restaurant.domain.Dish
 import java.security.MessageDigest
 
 // TODO: Esto es para tener un precio que pintar y que

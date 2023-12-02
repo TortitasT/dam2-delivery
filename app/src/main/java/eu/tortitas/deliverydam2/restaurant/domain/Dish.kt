@@ -1,4 +1,4 @@
-package eu.tortitas.deliverydam2.domain
+package eu.tortitas.deliverydam2.restaurant.domain
 
 data class Dish(
     val id: Int,

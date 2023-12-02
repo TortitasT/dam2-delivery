@@ -2,6 +2,7 @@ package eu.tortitas.deliverydam2
 
 import android.app.Application
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -16,6 +17,7 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 import eu.tortitas.deliverydam2.core.navigation.Navigator
+import eu.tortitas.deliverydam2.core.security.HashModule
 import eu.tortitas.deliverydam2.login.ui.LoginScreen
 import eu.tortitas.deliverydam2.login.ui.LoginViewModel
 import eu.tortitas.deliverydam2.register.ui.RegisterScreen
@@ -58,6 +60,12 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+        val hash = HashModule()
+        var hashed = hash.hash("112122", hash.generateSalt("john"))
+        Log.i("Hash", "Hash: $hashed")
+        hashed = hash.hash("112122", hash.generateSalt("john"))
+        Log.i("Hash", "Hash: $hashed")
     }
 
     override fun onDestroy() {

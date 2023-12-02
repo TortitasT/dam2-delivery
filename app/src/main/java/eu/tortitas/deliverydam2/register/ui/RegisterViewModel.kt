@@ -42,8 +42,8 @@ class RegisterViewModel @Inject constructor(
     val passwordError = _password.map { password ->
         if (password.isEmpty()) {
             "Password is required"
-        } else if (password.length < 8) {
-            "Password must be at least 8 characters long"
+        } else if (password.length < 6) {
+            "Password must be at least 6 characters long"
         } else {
             null
         }
@@ -68,6 +68,12 @@ class RegisterViewModel @Inject constructor(
     private val _loading = MutableStateFlow(false)
     val loading = _loading
 
+    private val _popupShown = MutableStateFlow(false)
+    val popupShown = _popupShown
+
+    private val _popupText = MutableStateFlow("")
+    val popupText = _popupText
+
     fun onEmailOrPasswordChanged(email: String, password: String, passwordConfirmation: String) {
         if (_email.value != email) {
             _emailModified.value = true
@@ -86,6 +92,10 @@ class RegisterViewModel @Inject constructor(
 
     fun onNavigateToLogin() {
         navigator.navigate("login")
+    }
+
+    fun onPopupDismissed() {
+        _popupShown.value = false
     }
 
     fun onRegister() {
@@ -110,6 +120,9 @@ class RegisterViewModel @Inject constructor(
 
             if (registerUseCase(email.value, password.value, passwordConfirmation.value)) {
                 navigator.navigate("login")
+            } else {
+                _popupText.value = "Error registering"
+                _popupShown.value = true
             }
 
             _loading.value = false

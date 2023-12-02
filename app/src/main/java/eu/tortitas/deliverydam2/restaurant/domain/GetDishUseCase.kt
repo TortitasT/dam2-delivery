@@ -1,7 +1,6 @@
 package eu.tortitas.deliverydam2.restaurant.domain
 
-import eu.tortitas.deliverydam2.data.RestaurantRepository
-import eu.tortitas.deliverydam2.domain.Dish
+import eu.tortitas.deliverydam2.restaurant.data.RestaurantRepository
 import javax.inject.Inject
 
 class GetDishUseCase @Inject constructor(

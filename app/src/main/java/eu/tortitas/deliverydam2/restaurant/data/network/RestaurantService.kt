@@ -1,4 +1,4 @@
-package eu.tortitas.deliverydam2.data.network
+package eu.tortitas.deliverydam2.restaurant.data.network
 
 import javax.inject.Inject
 
