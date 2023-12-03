@@ -16,7 +16,7 @@ class LoginViewModel @Inject constructor(
     private val navigator: Navigator,
     private val loginUseCase: LoginUseCase,
 ) : ViewModel() {
-    private val _email = MutableStateFlow("victorgf2011@gmail.com")
+    private val _email = MutableStateFlow("botso420@maxseeding.vn")
     val email = _email
 
     private val _emailModified = MutableStateFlow(false)
@@ -32,7 +32,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private val _password = MutableStateFlow("112122")
+    private val _password = MutableStateFlow("112122112")
     val password = _password
 
     val _passwordModified = MutableStateFlow(false)
